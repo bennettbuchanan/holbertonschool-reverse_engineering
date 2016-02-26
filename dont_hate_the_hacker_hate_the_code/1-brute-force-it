@@ -1,0 +1,15 @@
+#!/bin/bash
+cp a.out file_copy
+strings ./a.out &> strings_output.txt
+
+i="1"
+./a.out 123456 &> output.txt
+
+while [ ! -f "a.out" ]
+do
+	cp file_copy a.out
+	PASSWORD=$(sed $i'p;d' strings_output.txt)
+	./a.out $PASSWORD &> output.txt
+	((i++))
+done
+	echo $PASSWORD
