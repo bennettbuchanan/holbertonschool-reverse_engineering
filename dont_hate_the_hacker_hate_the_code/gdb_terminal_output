@@ -1,0 +1,336 @@
+vagrant@vagrant-ubuntu-trusty-64:/vagrant/Desktop/holbertonschool-reverse_engineering/dont_hate_the_hacker_hate_the_code$ objdump -T a.out
+
+a.out:     file format elf64-x86-64
+
+DYNAMIC SYMBOL TABLE:
+0000000000000000      DF *UND*	0000000000000000  GLIBC_2.2.5 puts
+0000000000000000      DF *UND*	0000000000000000  GLIBC_2.2.5 printf
+0000000000000000      DF *UND*	0000000000000000  GLIBC_2.2.5 __libc_start_main
+0000000000000000      DF *UND*	0000000000000000  GLIBC_2.2.5 execve
+0000000000000000      DF *UND*	0000000000000000  GLIBC_2.2.5 strcmp
+0000000000000000  w   D  *UND*	0000000000000000              __gmon_start__
+
+
+vagrant@vagrant-ubuntu-trusty-64:/vagrant/Desktop/holbertonschool-reverse_engineering/dont_hate_the_hacker_hate_the_code$ gdb -q ./a.out
+Reading symbols from ./a.out...(no debugging symbols found)...done.
+(gdb) set disassembly-flavor intel
+(gdb) disass main
+Dump of assembler code for function main:
+   0x000000000040060d <+0>:	push   rbp
+   0x000000000040060e <+1>:	mov    rbp,rsp
+   0x0000000000400611 <+4>:	sub    rsp,0x30
+   0x0000000000400615 <+8>:	mov    DWORD PTR [rbp-0x14],edi
+   0x0000000000400618 <+11>:	mov    QWORD PTR [rbp-0x20],rsi
+   0x000000000040061c <+15>:	mov    QWORD PTR [rbp-0x28],rdx
+   0x0000000000400620 <+19>:	mov    QWORD PTR [rbp-0x10],0x4007e8
+   0x0000000000400628 <+27>:	mov    rax,QWORD PTR [rbp-0x20]
+   0x000000000040062c <+31>:	mov    rax,QWORD PTR [rax]
+   0x000000000040062f <+34>:	mov    QWORD PTR [rbp-0x8],rax
+   0x0000000000400633 <+38>:	cmp    DWORD PTR [rbp-0x14],0x2
+   0x0000000000400637 <+42>:	je     0x400673 <main+102>
+   0x0000000000400639 <+44>:	mov    rax,QWORD PTR [rbp-0x20]
+   0x000000000040063d <+48>:	mov    rax,QWORD PTR [rax]
+   0x0000000000400640 <+51>:	mov    rsi,rax
+   0x0000000000400643 <+54>:	mov    edi,0x4007eb
+   0x0000000000400648 <+59>:	mov    eax,0x0
+   0x000000000040064d <+64>:	call   0x4004d0 <printf@plt>
+   0x0000000000400652 <+69>:	mov    edi,0x4007ff
+   0x0000000000400657 <+74>:	call   0x4004c0 <puts@plt>
+   0x000000000040065c <+79>:	mov    rdx,QWORD PTR [rbp-0x28]
+   0x0000000000400660 <+83>:	lea    rax,[rbp-0x10]
+   0x0000000000400664 <+87>:	mov    rsi,rax
+   0x0000000000400667 <+90>:	mov    edi,0x400819
+   0x000000000040066c <+95>:	call   0x4004f0 <execve@plt>
+   0x0000000000400671 <+100>:	jmp    0x4006b1 <main+164>
+   0x0000000000400673 <+102>:	cmp    DWORD PTR [rbp-0x14],0x62
+   0x0000000000400677 <+106>:	jne    0x4006b1 <main+164>
+   0x0000000000400679 <+108>:	mov    edi,0x400821
+   0x000000000040067e <+113>:	mov    eax,0x0
+   0x0000000000400683 <+118>:	call   0x4004d0 <printf@plt>
+   0x0000000000400688 <+123>:	mov    edi,0x40082e
+   0x000000000040068d <+128>:	call   0x4004c0 <puts@plt>
+   0x0000000000400692 <+133>:	mov    edi,0x4007ff
+   0x0000000000400697 <+138>:	call   0x4004c0 <puts@plt>
+   0x000000000040069c <+143>:	mov    rdx,QWORD PTR [rbp-0x28]
+   0x00000000004006a0 <+147>:	lea    rax,[rbp-0x10]
+   0x00000000004006a4 <+151>:	mov    rsi,rax
+   0x00000000004006a7 <+154>:	mov    edi,0x400819
+   0x00000000004006ac <+159>:	call   0x4004f0 <execve@plt>
+   0x00000000004006b1 <+164>:	mov    rax,QWORD PTR [rbp-0x20]
+   0x00000000004006b5 <+168>:	add    rax,0x8
+   0x00000000004006b9 <+172>:	mov    rax,QWORD PTR [rax]
+   0x00000000004006bc <+175>:	mov    esi,0x40083e
+   0x00000000004006c1 <+180>:	mov    rdi,rax
+   0x00000000004006c4 <+183>:	call   0x400500 <strcmp@plt>
+   0x00000000004006c9 <+188>:	test   eax,eax
+   0x00000000004006cb <+190>:	jne    0x400702 <main+245>
+   0x00000000004006cd <+192>:	mov    edi,0x400846
+   0x00000000004006d2 <+197>:	call   0x4004c0 <puts@plt>
+   0x00000000004006d7 <+202>:	mov    edi,0x400868
+   0x00000000004006dc <+207>:	call   0x4004c0 <puts@plt>
+   0x00000000004006e1 <+212>:	mov    edi,0x4007ff
+---Type <return> to continue, or q <return> to quit---
+   0x00000000004006e6 <+217>:	call   0x4004c0 <puts@plt>
+   0x00000000004006eb <+222>:	mov    rdx,QWORD PTR [rbp-0x28]
+   0x00000000004006ef <+226>:	lea    rax,[rbp-0x10]
+   0x00000000004006f3 <+230>:	mov    rsi,rax
+   0x00000000004006f6 <+233>:	mov    edi,0x400819
+   0x00000000004006fb <+238>:	call   0x4004f0 <execve@plt>
+   0x0000000000400700 <+243>:	jmp    0x400758 <main+331>
+   0x0000000000400702 <+245>:	mov    rax,QWORD PTR [rbp-0x20]
+   0x0000000000400706 <+249>:	add    rax,0x8
+   0x000000000040070a <+253>:	mov    rax,QWORD PTR [rax]
+   0x000000000040070d <+256>:	mov    esi,0x40088c
+   0x0000000000400712 <+261>:	mov    rdi,rax
+   0x0000000000400715 <+264>:	call   0x400500 <strcmp@plt>
+   0x000000000040071a <+269>:	test   eax,eax
+   0x000000000040071c <+271>:	jne    0x40072f <main+290>
+   0x000000000040071e <+273>:	mov    edi,0x400894
+   0x0000000000400723 <+278>:	call   0x4004c0 <puts@plt>
+   0x0000000000400728 <+283>:	mov    eax,0x0
+   0x000000000040072d <+288>:	jmp    0x40075d <main+336>
+   0x000000000040072f <+290>:	mov    edi,0x4008a7
+   0x0000000000400734 <+295>:	call   0x4004c0 <puts@plt>
+   0x0000000000400739 <+300>:	mov    edi,0x4007ff
+   0x000000000040073e <+305>:	call   0x4004c0 <puts@plt>
+   0x0000000000400743 <+310>:	mov    rdx,QWORD PTR [rbp-0x28]
+   0x0000000000400747 <+314>:	lea    rax,[rbp-0x10]
+   0x000000000040074b <+318>:	mov    rsi,rax
+   0x000000000040074e <+321>:	mov    edi,0x400819
+   0x0000000000400753 <+326>:	call   0x4004f0 <execve@plt>
+   0x0000000000400758 <+331>:	mov    eax,0x1
+   0x000000000040075d <+336>:	leave  
+   0x000000000040075e <+337>:	ret    
+End of assembler dump.
+(gdb) b *0x00000000004006c4
+Breakpoint 1 at 0x4006c4
+(gdb) run AAAAAA
+Starting program: /vagrant/Desktop/holbertonschool-reverse_engineering/dont_hate_the_hacker_hate_the_code/a.out AAAAAA
+
+Breakpoint 1, 0x00000000004006c4 in main ()
+(gdb) info reg
+rax            0x7fffffffe843	140737488349251
+rbx            0x0	0
+rcx            0x0	0
+rdx            0x7fffffffe5e0	140737488348640
+rsi            0x40083e	4196414
+rdi            0x7fffffffe843	140737488349251
+rbp            0x7fffffffe4e0	0x7fffffffe4e0
+rsp            0x7fffffffe4b0	0x7fffffffe4b0
+r8             0x7ffff7dd4e80	140737351863936
+r9             0x7ffff7dea560	140737351951712
+r10            0x7fffffffe370	140737488348016
+r11            0x7ffff7a36dd0	140737348070864
+r12            0x400520	4195616
+r13            0x7fffffffe5c0	140737488348608
+r14            0x0	0
+r15            0x0	0
+rip            0x4006c4	0x4006c4 <main+183>
+eflags         0x212	[ AF IF ]
+cs             0x33	51
+ss             0x2b	43
+ds             0x0	0
+es             0x0	0
+fs             0x0	0
+gs             0x0	0
+(gdb) x/12x $esp
+0xffffffffffffe4b0:	Cannot access memory at address 0xffffffffffffe4b0
+(gdb) x/4x 0x7fffffffe843
+0x7fffffffe843:	0x41414141	0x58004141	0x535f4744	0x49535345
+(gdb) x/4x 0x7fffffffe5e0
+0x7fffffffe5e0:	0xffffe84a	0x00007fff	0xffffe85b	0x00007fff
+(gdb) x/4x 0x40083e
+0x40083e:	0x73696323	0x006e7566	0x20534559	0x69207469
+(gdb) p/c *0x40083e
+$1 = 35 '#'
+(gdb) 0x40083d
+Undefined command: "0x40083d".  Try "help".
+(gdb) p/c *0x40083d
+$2 = 0 '\000'
+(gdb) p/c *0x40083f
+$3 = 99 'c'
+(gdb) p/c *0x40083g
+Invalid number "0x40083g".
+(gdb) p/c *0x40083d
+$4 = 0 '\000'
+(gdb) p/c *0x4006c4
+$5 = -24 '\350'
+(gdb) b *0x0000000000400715
+Breakpoint 2 at 0x400715
+(gdb) run AAAAAA
+The program being debugged has been started already.
+Start it from the beginning? (y or n) y
+
+Starting program: /vagrant/Desktop/holbertonschool-reverse_engineering/dont_hate_the_hacker_hate_the_code/a.out AAAAAA
+
+Breakpoint 1, 0x00000000004006c4 in main ()
+(gdb) info reg
+rax            0x7fffffffe843	140737488349251
+rbx            0x0	0
+rcx            0x0	0
+rdx            0x7fffffffe5e0	140737488348640
+rsi            0x40083e	4196414
+rdi            0x7fffffffe843	140737488349251
+rbp            0x7fffffffe4e0	0x7fffffffe4e0
+rsp            0x7fffffffe4b0	0x7fffffffe4b0
+r8             0x7ffff7dd4e80	140737351863936
+r9             0x7ffff7dea560	140737351951712
+r10            0x7fffffffe370	140737488348016
+r11            0x7ffff7a36dd0	140737348070864
+r12            0x400520	4195616
+r13            0x7fffffffe5c0	140737488348608
+r14            0x0	0
+r15            0x0	0
+rip            0x4006c4	0x4006c4 <main+183>
+eflags         0x212	[ AF IF ]
+cs             0x33	51
+ss             0x2b	43
+ds             0x0	0
+es             0x0	0
+fs             0x0	0
+gs             0x0	0
+(gdb) 
+[10]+  Stopped                 gdb -q ./a.out
+vagrant@vagrant-ubuntu-trusty-64:/vagrant/Desktop/holbertonschool-reverse_engineering/dont_hate_the_hacker_hate_the_code$ 
+vagrant@vagrant-ubuntu-trusty-64:/vagrant/Desktop/holbertonschool-reverse_engineering/dont_hate_the_hacker_hate_the_code$ 
+vagrant@vagrant-ubuntu-trusty-64:/vagrant/Desktop/holbertonschool-reverse_engineering/dont_hate_the_hacker_hate_the_code$ gdb -q ./a.out
+Reading symbols from ./a.out...(no debugging symbols found)...done.
+(gdb) set disassembly-flavor intel
+(gdb) disass main
+Dump of assembler code for function main:
+   0x000000000040060d <+0>:	push   rbp
+   0x000000000040060e <+1>:	mov    rbp,rsp
+   0x0000000000400611 <+4>:	sub    rsp,0x30
+   0x0000000000400615 <+8>:	mov    DWORD PTR [rbp-0x14],edi
+   0x0000000000400618 <+11>:	mov    QWORD PTR [rbp-0x20],rsi
+   0x000000000040061c <+15>:	mov    QWORD PTR [rbp-0x28],rdx
+   0x0000000000400620 <+19>:	mov    QWORD PTR [rbp-0x10],0x4007e8
+   0x0000000000400628 <+27>:	mov    rax,QWORD PTR [rbp-0x20]
+   0x000000000040062c <+31>:	mov    rax,QWORD PTR [rax]
+   0x000000000040062f <+34>:	mov    QWORD PTR [rbp-0x8],rax
+   0x0000000000400633 <+38>:	cmp    DWORD PTR [rbp-0x14],0x2
+   0x0000000000400637 <+42>:	je     0x400673 <main+102>
+   0x0000000000400639 <+44>:	mov    rax,QWORD PTR [rbp-0x20]
+   0x000000000040063d <+48>:	mov    rax,QWORD PTR [rax]
+   0x0000000000400640 <+51>:	mov    rsi,rax
+   0x0000000000400643 <+54>:	mov    edi,0x4007eb
+   0x0000000000400648 <+59>:	mov    eax,0x0
+   0x000000000040064d <+64>:	call   0x4004d0 <printf@plt>
+   0x0000000000400652 <+69>:	mov    edi,0x4007ff
+   0x0000000000400657 <+74>:	call   0x4004c0 <puts@plt>
+   0x000000000040065c <+79>:	mov    rdx,QWORD PTR [rbp-0x28]
+   0x0000000000400660 <+83>:	lea    rax,[rbp-0x10]
+   0x0000000000400664 <+87>:	mov    rsi,rax
+   0x0000000000400667 <+90>:	mov    edi,0x400819
+   0x000000000040066c <+95>:	call   0x4004f0 <execve@plt>
+   0x0000000000400671 <+100>:	jmp    0x4006b1 <main+164>
+   0x0000000000400673 <+102>:	cmp    DWORD PTR [rbp-0x14],0x62
+   0x0000000000400677 <+106>:	jne    0x4006b1 <main+164>
+   0x0000000000400679 <+108>:	mov    edi,0x400821
+   0x000000000040067e <+113>:	mov    eax,0x0
+   0x0000000000400683 <+118>:	call   0x4004d0 <printf@plt>
+   0x0000000000400688 <+123>:	mov    edi,0x40082e
+   0x000000000040068d <+128>:	call   0x4004c0 <puts@plt>
+   0x0000000000400692 <+133>:	mov    edi,0x4007ff
+   0x0000000000400697 <+138>:	call   0x4004c0 <puts@plt>
+   0x000000000040069c <+143>:	mov    rdx,QWORD PTR [rbp-0x28]
+   0x00000000004006a0 <+147>:	lea    rax,[rbp-0x10]
+   0x00000000004006a4 <+151>:	mov    rsi,rax
+   0x00000000004006a7 <+154>:	mov    edi,0x400819
+   0x00000000004006ac <+159>:	call   0x4004f0 <execve@plt>
+   0x00000000004006b1 <+164>:	mov    rax,QWORD PTR [rbp-0x20]
+   0x00000000004006b5 <+168>:	add    rax,0x8
+   0x00000000004006b9 <+172>:	mov    rax,QWORD PTR [rax]
+   0x00000000004006bc <+175>:	mov    esi,0x40083e
+   0x00000000004006c1 <+180>:	mov    rdi,rax
+   0x00000000004006c4 <+183>:	call   0x400500 <strcmp@plt>
+   0x00000000004006c9 <+188>:	test   eax,eax
+   0x00000000004006cb <+190>:	jne    0x400702 <main+245>
+   0x00000000004006cd <+192>:	mov    edi,0x400846
+   0x00000000004006d2 <+197>:	call   0x4004c0 <puts@plt>
+   0x00000000004006d7 <+202>:	mov    edi,0x400868
+   0x00000000004006dc <+207>:	call   0x4004c0 <puts@plt>
+   0x00000000004006e1 <+212>:	mov    edi,0x4007ff
+   0x00000000004006e6 <+217>:	call   0x4004c0 <puts@plt>
+   0x00000000004006eb <+222>:	mov    rdx,QWORD PTR [rbp-0x28]
+   0x00000000004006ef <+226>:	lea    rax,[rbp-0x10]
+   0x00000000004006f3 <+230>:	mov    rsi,rax
+   0x00000000004006f6 <+233>:	mov    edi,0x400819
+   0x00000000004006fb <+238>:	call   0x4004f0 <execve@plt>
+   0x0000000000400700 <+243>:	jmp    0x400758 <main+331>
+   0x0000000000400702 <+245>:	mov    rax,QWORD PTR [rbp-0x20]
+---Type <return> to continue, or q <return> to quit---
+   0x0000000000400706 <+249>:	add    rax,0x8
+   0x000000000040070a <+253>:	mov    rax,QWORD PTR [rax]
+   0x000000000040070d <+256>:	mov    esi,0x40088c
+   0x0000000000400712 <+261>:	mov    rdi,rax
+   0x0000000000400715 <+264>:	call   0x400500 <strcmp@plt>
+   0x000000000040071a <+269>:	test   eax,eax
+   0x000000000040071c <+271>:	jne    0x40072f <main+290>
+   0x000000000040071e <+273>:	mov    edi,0x400894
+   0x0000000000400723 <+278>:	call   0x4004c0 <puts@plt>
+   0x0000000000400728 <+283>:	mov    eax,0x0
+   0x000000000040072d <+288>:	jmp    0x40075d <main+336>
+   0x000000000040072f <+290>:	mov    edi,0x4008a7
+   0x0000000000400734 <+295>:	call   0x4004c0 <puts@plt>
+   0x0000000000400739 <+300>:	mov    edi,0x4007ff
+   0x000000000040073e <+305>:	call   0x4004c0 <puts@plt>
+   0x0000000000400743 <+310>:	mov    rdx,QWORD PTR [rbp-0x28]
+   0x0000000000400747 <+314>:	lea    rax,[rbp-0x10]
+   0x000000000040074b <+318>:	mov    rsi,rax
+   0x000000000040074e <+321>:	mov    edi,0x400819
+   0x0000000000400753 <+326>:	call   0x4004f0 <execve@plt>
+   0x0000000000400758 <+331>:	mov    eax,0x1
+   0x000000000040075d <+336>:	leave  
+   0x000000000040075e <+337>:	ret    
+End of assembler dump.
+(gdb) b *0x0000000000400715
+Breakpoint 1 at 0x400715
+(gdb) run AAAAAA
+Starting program: /vagrant/Desktop/holbertonschool-reverse_engineering/dont_hate_the_hacker_hate_the_code/a.out AAAAAA
+
+Breakpoint 1, 0x0000000000400715 in main ()
+(gdb) info reg
+rax            0x7fffffffe843	140737488349251
+rbx            0x0	0
+rcx            0x23	35
+rdx            0x0	0
+rsi            0x40088c	4196492
+rdi            0x7fffffffe843	140737488349251
+rbp            0x7fffffffe4e0	0x7fffffffe4e0
+rsp            0x7fffffffe4b0	0x7fffffffe4b0
+r8             0x0	0
+r9             0x0	0
+r10            0x7ffff7b557b0	140737349244848
+r11            0x7ffff7b55200	140737349243392
+r12            0x400520	4195616
+r13            0x7fffffffe5c0	140737488348608
+r14            0x0	0
+r15            0x0	0
+rip            0x400715	0x400715 <main+264>
+eflags         0x212	[ AF IF ]
+cs             0x33	51
+ss             0x2b	43
+ds             0x0	0
+es             0x0	0
+fs             0x0	0
+gs             0x0	0
+(gdb) x/4x 0x40088c
+0x40088c:	0x6d79732e	0x00626174	0x65636341	0x67207373
+(gdb) p/c *0x40088c
+$1 = 46 '.'
+(gdb) p/c *0x40088d
+$2 = 115 's'
+(gdb) p/c *0x40088e
+$3 = 121 'y'
+(gdb) p/c *0x40088f
+$4 = 109 'm'
+(gdb) p/c *0x400890
+$5 = 116 't'
+(gdb) p/c *0x400891
+$6 = 97 'a'
+(gdb) p/c *0x400892
+$7 = 98 'b'
+(gdb) p/c *0x400893
+$8 = 0 '\000'
+(gdb) 
